@@ -1,0 +1,396 @@
+body {
+  margin: 0px;
+}
+
+#game_grid {
+  border: 2px tomato solid;
+  width: 660px;
+  margin: 20px auto;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 200px;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+}
+
+.card {
+  width: 150px;
+  height: 180px;
+  position: relative;
+  transition: transform 1s;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+img {
+  width: 100%;
+}
+
+.front_face,
+.back_face {
+  position: absolute;
+  backface-visibility: hidden;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.back_face {
+  object-fit: cover;
+}
+
+.flip {
+  transform: rotateY(180deg);
+}
+
+.front_face {
+  transform: rotateY(180deg);
+  background: #fff;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Themes ── */
+body.dark {
+  background-color: #12141f;
+  color: #f0f2ff;
+}
+body.light {
+  background-color: #f4f6ff;
+  color: #1a1d2e;
+}
+
+/* ── Header / Status ── */
+#header {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  font-family: Arial, sans-serif;
+}
+
+#game_title {
+  font-size: 1.6rem;
+  margin: 0 0 10px;
+  color: #ffd700;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+#status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.stat strong {
+  color: #ffd700;
+}
+
+body.light .stat strong {
+  color: #c47f00;
+}
+
+#timer_display.urgent {
+  color: #ff4757 !important;
+  animation: blink 0.5s step-end infinite alternate;
+}
+
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.4;
+  }
+}
+
+/* ── Controls row ── */
+#controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+/* ── Difficulty buttons ── */
+#difficulty_buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.diff_btn {
+  padding: 7px 16px;
+  border: 2px solid #555;
+  background: transparent;
+  color: #aaa;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+.diff_btn.active,
+.diff_btn:hover {
+  border-color: #ffd700;
+  color: #ffd700;
+  background: rgba(255, 215, 0, 0.08);
+}
+body.light .diff_btn {
+  border-color: #bbb;
+  color: #555;
+}
+body.light .diff_btn.active,
+body.light .diff_btn:hover {
+  border-color: #c47f00;
+  color: #c47f00;
+  background: rgba(196, 127, 0, 0.08);
+}
+
+/* ── Action buttons ── */
+#action_buttons {
+  display: flex;
+  gap: 6px;
+}
+
+#start_btn,
+#reset_btn,
+#powerup_btn,
+#overlay_btn {
+  padding: 7px 18px;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+#start_btn {
+  background: #ffd700;
+  color: #1a1d2e;
+  border-color: #ffd700;
+}
+#start_btn:hover {
+  background: transparent;
+  color: #ffd700;
+}
+
+#reset_btn {
+  background: transparent;
+  color: #aaa;
+  border-color: #555;
+}
+#reset_btn:hover {
+  border-color: #3b9eff;
+  color: #3b9eff;
+}
+
+#powerup_btn {
+  background: transparent;
+  color: #a55eea;
+  border-color: #a55eea;
+}
+#powerup_btn:hover:not(:disabled) {
+  background: rgba(165, 94, 234, 0.12);
+}
+#powerup_btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── Theme buttons ── */
+#theme_buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.theme_btn {
+  padding: 7px 14px;
+  border: 2px solid #555;
+  background: transparent;
+  color: #aaa;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+.theme_btn.active {
+  border-color: #ffd700;
+  color: #ffd700;
+}
+body.light .theme_btn {
+  border-color: #bbb;
+  color: #555;
+}
+body.light .theme_btn.active {
+  border-color: #c47f00;
+  color: #c47f00;
+}
+
+/* ── Matched card highlight ── */
+.card.matched .front_face {
+  border: 2px solid #2ed573;
+  box-shadow: 0 0 12px rgba(46, 213, 115, 0.5);
+}
+
+/* ── Card size variants per difficulty ── */
+.grid_easy .card {
+  width: 160px;
+  height: 190px;
+}
+.grid_medium .card {
+  width: 120px;
+  height: 145px;
+}
+.grid_hard .card {
+  width: 95px;
+  height: 115px;
+}
+
+/* ── Overlay ── */
+#overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(10, 10, 20, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#overlay.hidden {
+  display: none;
+}
+
+body.light #overlay {
+  background: rgba(200, 210, 240, 0.88);
+}
+
+#overlay_box {
+  background: #1e2235;
+  border: 2px solid #2e3350;
+  border-radius: 16px;
+  padding: 40px 50px;
+  text-align: center;
+  max-width: 420px;
+  width: 90%;
+  animation: popup 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+body.light #overlay_box {
+  background: #fff;
+  border-color: #c5cee8;
+  color: #1a1d2e;
+}
+
+@keyframes popup {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+#overlay_icon {
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+#overlay_title {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+#overlay_msg {
+  color: #8a90b0;
+  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+body.light #overlay_msg {
+  color: #5a6080;
+}
+
+#overlay_btn {
+  background: #ffd700;
+  color: #1a1d2e;
+  border-color: #ffd700;
+  font-size: 14px;
+  padding: 10px 28px;
+}
+#overlay_btn:hover {
+  background: transparent;
+  color: #ffd700;
+}
+
+/* ── Loading screen ── */
+#loading {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(10, 10, 20, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  color: #aaa;
+  font-size: 14px;
+}
+#loading.hidden {
+  display: none;
+}
+
+body.light #loading {
+  background: rgba(200, 210, 240, 0.9);
+}
+
+/* Pokéball spinner */
+.pokeball {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pokeball_top {
+  width: 64px;
+  height: 32px;
+  background: #e74c3c;
+  border-radius: 32px 32px 0 0;
+  border: 3px solid #222;
+  border-bottom: none;
+}
+.pokeball_bot {
+  width: 64px;
+  height: 32px;
+  background: #f0f0f0;
+  border-radius: 0 0 32px 32px;
+  border: 3px solid #222;
+  border-top: none;
+}
+.pokeball_mid {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  border: 3px solid #222;
+  z-index: 1;
+}

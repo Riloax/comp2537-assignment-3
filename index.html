@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokemon Memory Game</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- import jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="index.js"></script>
+  </head>
+
+  <body class="dark">
+    <!--  Status / Controls header  -->
+    <div id="header">
+      <h1 id="game_title">Pokémon Memory</h1>
+
+      <div id="status">
+        <span class="stat">Clicks: <strong id="click_count">0</strong></span>
+        <span class="stat">Time: <strong id="timer_display">--</strong></span>
+        <span class="stat"
+          >Matched: <strong id="pairs_matched">0</strong> /
+          <strong id="total_pairs">0</strong></span
+        >
+        <span class="stat">Pairs Left: <strong id="pairs_left">0</strong></span>
+      </div>
+
+      <div id="controls">
+        <div id="difficulty_buttons">
+          <button class="diff_btn active" data-diff="easy">Easy</button>
+          <button class="diff_btn" data-diff="medium">Medium</button>
+          <button class="diff_btn" data-diff="hard">Hard</button>
+        </div>
+
+        <div id="action_buttons">
+          <button id="start_btn">▶ Start</button>
+          <button id="reset_btn">↺ Reset</button>
+          <button id="powerup_btn" disabled>⚡ Peek</button>
+        </div>
+
+        <div id="theme_buttons">
+          <button class="theme_btn active" data-theme="dark">🌙 Dark</button>
+          <button class="theme_btn" data-theme="light">☀️ Light</button>
+        </div>
+      </div>
+    </div>
+
+    <!--  game_grid — same id as starter  -->
+    <div id="game_grid">
+      <!-- Cards injected by JS -->
+    </div>
+
+    <!--  Win / Lose overlay  -->
+    <div id="overlay" class="hidden">
+      <div id="overlay_box">
+        <div id="overlay_icon"></div>
+        <h2 id="overlay_title"></h2>
+        <p id="overlay_msg"></p>
+        <button id="overlay_btn">Play Again</button>
+      </div>
+    </div>
+
+    <!--  Loading screen -->
+    <div id="loading" class="hidden">
+      <div class="pokeball">
+        <div class="pokeball_top"></div>
+        <div class="pokeball_mid"></div>
+        <div class="pokeball_bot"></div>
+      </div>
+      <p>Loading Pokémon...</p>
+    </div>
+  </body>
+</html>
